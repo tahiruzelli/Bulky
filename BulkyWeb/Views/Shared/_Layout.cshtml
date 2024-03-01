@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -52,9 +55,24 @@ s.net/1.13.3/css/jquery.dataTables.min.css" />
                             </ul>
                         </li>
                         }
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart) != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"> &nbsp;
+                                    (@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart))
+                                </i></a>
+                            </li>
+                        }
+                        else{
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"> &nbsp; (0)</i></a>
+                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                <i class="bi bi-cart">
+                                    &nbsp;
+                                    (0)
+                                </i>
+                            </a>
                         </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
